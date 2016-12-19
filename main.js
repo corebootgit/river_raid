@@ -23,30 +23,22 @@ function draw() {
     alien[i].show();
     alien[i].move();
     if (alien[i].collision()) {
-      alien.splice(i,1);
-      score+=5;
+      alien.splice(i, 1);
+      score += 5;
     }
   }
-  
+
+  if (alien.length > 0) {
+    textSize(16);
+    text(score, 10, 30);
+  } else {
+    textSize(32);
+    text("Your score:" + score, width / 2, height / 2);
+  }
 
 
-  // if (dist(bullet.x, bullet.y, alien.x, alien.y) < alien.r) {
-  //   if (score_val) {
-  //     alien.r -= 1;
-  //     console.log("Score: %d", score);
-  //   }
-  //   score += score_val;
-  //   score_val = 0;
-  //   bullet.y = 0;
-  // } else {
-  //   score_val = 1;
-  // }
-
-
-
-  textSize(16);
-  text(score, 10, 30);
 }
+
 
 function keyPressed() {
   if (keyCode == LEFT_ARROW) {
@@ -58,7 +50,15 @@ function keyPressed() {
   if (key == ' ') {
     bullet.x = player.x + player.width / 2;
     bullet.y = player.y - player.height - bullet.lenght;
-    if(score) score--;
+    if (score) score--;
+  }
+
+  if(key == 'N' || key == 'n') {
+    console.log("New game");
+    for (var i = 0; i < 10; i++) {
+      alien[i] = new Enemy(i * 50 + 50, i * 50 + 10);
+      score = 0;
+    }
   }
 }
 
