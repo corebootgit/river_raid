@@ -1,43 +1,46 @@
 var score = 0;
 var score_val = 1;
-var slider;
+var alien = [];
 
 function setup() {
   createCanvas(800, 600);
   player = new Ship();
   bullet = new Laser();
-  alien = new Enemy();
 
-  slider = createSlider(0, 255, 100);
-  slider.position(50, 10);
-  slider.style('width', '380px');
-
+  for (var i = 0; i < 10; i++) {
+    alien[i] = new Enemy(i * 50 + 50, i * 50 + 10);
+    //alien[i].y = i * 50;
+  }
 }
 
 function draw() {
-	var val = slider.value();
-
-  background(val);
+  background(255);
   player.show();
   player.move();
   bullet.show();
   bullet.move();
-  alien.show();
-  alien.move();
-
-  
-  
-  if (dist(bullet.x, bullet.y, alien.x, alien.y) < alien.r) {
-    if(score_val) {
-      alien.r -= 1;
-      console.log("Score: %d", score);
+  for (var i = 0; i < alien.length; i++) {
+    alien[i].show();
+    alien[i].move();
+    if (alien[i].collision()) {
+      alien.splice(i,1);
+      score+=5;
     }
-    score += score_val;
-    score_val = 0;
-    bullet.y = 0;
-  } else {
-    score_val = 1;
   }
+  
+
+
+  // if (dist(bullet.x, bullet.y, alien.x, alien.y) < alien.r) {
+  //   if (score_val) {
+  //     alien.r -= 1;
+  //     console.log("Score: %d", score);
+  //   }
+  //   score += score_val;
+  //   score_val = 0;
+  //   bullet.y = 0;
+  // } else {
+  //   score_val = 1;
+  // }
 
 
 
@@ -55,6 +58,7 @@ function keyPressed() {
   if (key == ' ') {
     bullet.x = player.x + player.width / 2;
     bullet.y = player.y - player.height - bullet.lenght;
+    if(score) score--;
   }
 }
 
