@@ -1,7 +1,7 @@
 function Enemy(xp, yp) {
   this.x = xp; //width / 2;
   this.y = yp; //height / 2;
-  this.r = 25;
+  this.r = 50;
   this.speed = 8;
 
   this.move = function() {
@@ -11,8 +11,10 @@ function Enemy(xp, yp) {
   }
 
   this.show = function() {
-    //fill(200-this.r*2,0,0);
+    push();
+    fill(255,0,0,127);
     ellipse(this.x, this.y, 2 * this.r, 2 * this.r);
+    pop();
   }
 
   this.collision = function() {

@@ -1,12 +1,15 @@
 function Ship() {
   this.width = 16;
-  this.height = 32;
+  this.height = 16;
   this.x = width / 2;
   this.y = height;
   this.move_speed = 0;
 
   this.show = function() {
+    push();
+    fill(0,0,255);
     triangle(this.x, this.y, this.x + this.width, this.y, this.x + this.width / 2, this.y - this.height);
+   pop();
   }
 
   this.move = function() {
