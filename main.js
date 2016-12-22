@@ -1,16 +1,14 @@
 var score = 0;
 var score_val = 1;
 var alien = [];
+var alien_laser = [];
 
 function setup() {
   createCanvas(800, 600);
   player = new Ship();
   bullet = new Laser();
 
-  for (var i = 0; i < 10; i++) {
-    alien[i] = new Enemy(i * 50 + 50, i * 50 + 10);
-    //alien[i].y = i * 50;
-  }
+  spawn_enemies();
 }
 
 function draw() {
@@ -19,12 +17,26 @@ function draw() {
   player.move();
   bullet.show();
   bullet.move();
-  for (var i = 0; i < alien.length; i++) {
+
+  for (var i = alien_laser.length - 1; i > 0; i--) {
+    alien_laser[i].move();
+    alien_laser[i].show();
+    if (alien_laser[i].endlife()) {
+      alien_laser.splice(i, 1);
+    }
+  }
+
+  for (var i = alien.length - 1; i > 0; i--) {
     alien[i].show();
     alien[i].move();
     if (alien[i].collision()) {
       alien.splice(i, 1);
       score += 5;
+    }
+
+    if (random(0, 1000) > 990) {
+      console.log("shoot");
+      alien_laser.push(new Alien_Laser(alien[i].x, alien[i].y));
     }
   }
 
@@ -39,6 +51,12 @@ function draw() {
 
 }
 
+function spawn_enemies() {
+  for (var i = 0; i < 8; i++) {
+    alien[i] = new Enemy(random(50, 750), i * 70 + 10);
+    alien_laser[i] = new Alien_Laser();
+  }
+}
 
 function keyPressed() {
   if (keyCode == LEFT_ARROW) {
@@ -53,12 +71,13 @@ function keyPressed() {
     if (score) score--;
   }
 
-  if(key == 'N' || key == 'n') {
+  if (key == 'N' || key == 'n') {
     console.log("New game");
-    for (var i = 0; i < 10; i++) {
-      alien[i] = new Enemy(i * 50 + 50, i * 50 + 10);
-      score = 0;
-    }
+    spawn_enemies();
+    //alien[i] = new Enemy(i * 50 + 50, i * 50 + 10);
+    //alien[i] = new Enemy(i * 50 + 50, i * 50 + 10);
+    score = 0;
+
   }
 }
 

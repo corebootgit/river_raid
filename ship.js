@@ -7,9 +7,9 @@ function Ship() {
 
   this.show = function() {
     push();
-    fill(0,0,255);
+    fill(0, 0, 255);
     triangle(this.x, this.y, this.x + this.width, this.y, this.x + this.width / 2, this.y - this.height);
-   pop();
+    pop();
   }
 
   this.move = function() {
@@ -27,10 +27,10 @@ function Laser() {
   this.x = width / 2;
   this.y = 0;
   this.lenght = 10;
-  this.speed = 10;
+  this.speed = 20;
 
   this.show = function() {
-    line(this.x, this.y + this.lenght, this.x, this.y );
+    line(this.x, this.y + this.lenght, this.x, this.y);
   }
 
   this.move = function() {
